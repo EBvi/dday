@@ -13,6 +13,17 @@
 - OSX 10.11+ (엘 캐피탄 이상)
 - Alfred 3+
 
+## 음력 날짜로 지정하는 방법
+
+- [HappyDays](https://itunes.apple.com/kr/app/happydays-saeng-ginyeom-didei/id368501483?mt=8)에서 사용한 음력 기록 방식의 일부를 따릅니다
+- 기념일을 "음력:-"과 같이 **:-**를 붙여서 필드명을 저장하면, 음력 날짜로 불러옵니다
+
+```
+예)
+생신:-
+음력:-
+```
+
 ## 알려진 이슈
 
 - 특정 조건에 의해 연락처의 경로(~/Library/Application\\ Support/AddressBook/Sources/)가 변경된 경우, 제대로 데이터를 불러오지 못할 수 있습니다
