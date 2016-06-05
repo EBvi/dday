@@ -50,14 +50,12 @@ var birthList = h.makeArr( app.doShellScript("sqlite3 "+path+" \"SELECT ZLASTNAM
 
 var annivList = h.makeArr( app.doShellScript("sqlite3 "+path+" \"SELECT r.ZLASTNAME||r.ZFIRSTNAME||' ('|| REPLACE(d.ZLABEL, '_\\$\!<Anniversary>\!\\$_', '기념일')||')' AS name, strftime('%m-%d',datetime(d.ZDATE+strftime('%s', '2001-01-01 00:00:00'),'unixepoch')) AS md FROM ZABCDCONTACTDATE d INNER JOIN ZABCDRECORD r ON d.ZOWNER=r.Z_PK\" -separator '|'") );
 
-var arr = birthList.concat(annivList).sort(function(a,b){
+var items = [], arr = birthList.concat(annivList).sort(function(a,b){
     if(a.after === b.after) return 0;
     if(a.after < b.after) return -1;
     if(a.after > b.after) return 1;
+}).map(function(v){
+    items.push({
+        title:`${v.name} - ${v.after+(v.after==='---' ? '' : ('일 남음'))} (${v.md ? v.md : '없음'})`
+    });
 });
-
-var r = '<items>';
-arr.map(function(v){
-    r += `<item><title>${v.name} - ${v.after+(v.after==='---'?'':('일 남음'))} (${v.md?v.md:'없음'})</title><subtitle></subtitle></item>`;
-});
-r += '</items>';
