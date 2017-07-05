@@ -14,9 +14,10 @@ function getSolarDate(ymd) {
 
     if(isNew) {
         try {
-            result = app.doShellScript("curl 'http://astro.kasi.re.kr/Life/Knowledge/solar2lunar/convert_daily_l2s.php' -H 'Host: astro.kasi.re.kr' -H 'Accept-Language: ko-KR,ko;q=0.8,en-US;q=0.5,en;q=0.3' --compressed -H 'DNT: 1' -H 'Referer: http://astro.kasi.re.kr/Life/Knowledge/solar2lunar/convert_daily_l2s.php' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' --data 'lun_year="+o[0]+"&lun_month="+o[1]+"&lun_day="+o[2]+"&yoon=3'").match(/<td width=500>(.*?)<\/td>/)[1].match(/(\d+)/g).join('-');
+            result = JSON.parse( app.doShellScript(`curl 'https://astro.kasi.re.kr:444/life/solc' -H 'Host: astro.kasi.re.kr' -H 'Accept-Language: ko-KR,ko;q=0.8,en-US;q=0.5,en;q=0.3' --compressed -H 'DNT: 1' -H 'Referer: https://astro.kasi.re.kr:444' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' --data 'yyyy=${o[0]}&mm=${o[1]}&dd=${o[2]}'`) );
+            var lunc = `${result.LUNC_YYYY}-${result.LUNC_MM}-${result.LUNC_DD}`;
+            app.doShellScript('echo "'+ymd+':'+lunc+'" >> ~/.korean_lunar_calendar');
         } catch(e){}
-        app.doShellScript('echo "'+ymd+':'+result+'" >> ~/.korean_lunar_calendar');
     } else {
         result = lc.split(':')[1];
     }
