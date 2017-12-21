@@ -14,7 +14,7 @@ function getSolarDate(ymd) {
 
     if(isNew) {
         try {
-            result = JSON.parse( app.doShellScript(`curl 'https://astro.kasi.re.kr:444/life/solc' -H 'Host: astro.kasi.re.kr' -H 'Accept-Language: ko-KR,ko;q=0.8,en-US;q=0.5,en;q=0.3' --compressed -H 'DNT: 1' -H 'Referer: https://astro.kasi.re.kr:444' -H 'Connection: keep-alive' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' --data 'yyyy=${o[0]}&mm=${o[1]}&dd=${o[2]}'`) );
+            result = JSON.parse( app.doShellScript(`curl 'https://astro.kasi.re.kr:444/life/solc?yyyy=${o[0]}&mm=${o[1]}&dd=${o[2]}' -H 'Host: astro.kasi.re.kr:444' -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:57.0) Gecko/20100101 Firefox/57.0' -H 'Accept: */*' -H 'Accept-Language: ko-KR,ko;q=0.8,en-US;q=0.5,en;q=0.3' --compressed -H 'Referer: https://astro.kasi.re.kr:444' -H 'X-Requested-With: XMLHttpRequest' -H 'DNT: 1' -H 'Connection: keep-alive'`) );
             var lunc = `${result.LUNC_YYYY}-${result.LUNC_MM}-${result.LUNC_DD}`;
             app.doShellScript('echo "'+ymd+':'+lunc+'" >> ~/.korean_lunar_calendar');
         } catch(e){}
